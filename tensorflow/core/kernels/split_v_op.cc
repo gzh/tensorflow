@@ -243,7 +243,7 @@ class SplitVOpCPU : public SplitVOpBase<CPUDevice, T, Tlen> {
                        context->allocate_output(i, output_shape, &result));
 
         Eigen::DSizes<Eigen::DenseIndex, 3> sizes{
-            prefix_dim_size, split_sizes_vec[i], suffix_dim_size};
+            prefix_dim_size, (Eigen::DenseIndex)split_sizes_vec[i], suffix_dim_size};
 
         if (sizes.TotalSize() > 0) {
           auto result_shaped = result->shaped<T, 3>(

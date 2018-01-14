@@ -105,10 +105,14 @@ struct LaunchPoolingOp<CPUDevice, T, AVG> {
                      const std::array<int64, 3>& padding,
                      TensorFormat data_format, Padding padding_type,
                      Tensor* output) {
+#if defined(_WIN32) && !defined(_WIN64)
+    throw std::logic_error("CuboidAvgPooling not implemented on win32 because it requires passing SSE vector by value");
+#else
     output->tensor<T, 5>().device(context->eigen_device<CPUDevice>()) =
         Eigen::CuboidAvgPooling(tensor_in.tensor<T, 5>(), window[0], window[1],
                                 window[2], stride[0], stride[1], stride[2],
                                 BrainPadding2EigenPadding(padding_type));
+#endif
   }
 };
 

@@ -178,9 +178,9 @@ class Conv3DBackpropInputOp : public OpKernel {
     EXTRACT_AND_VERIFY_DIMENSIONS("Conv3DBackpropInput");
     Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 5> pad_dims{
         {0, 0},
-        {top_pad_planes, bottom_pad_planes},
-        {top_pad_rows, bottom_pad_rows},
-        {left_pad_cols, right_pad_cols},
+        { (Eigen::DenseIndex)top_pad_planes, (Eigen::DenseIndex)bottom_pad_planes},
+        { (Eigen::DenseIndex)top_pad_rows, (Eigen::DenseIndex)bottom_pad_rows},
+        { (Eigen::DenseIndex)left_pad_cols, (Eigen::DenseIndex)right_pad_cols},
         {0, 0}};
     Tensor* in_backprop;
     OP_REQUIRES_OK(context,
@@ -194,7 +194,7 @@ class Conv3DBackpropInputOp : public OpKernel {
                    context->allocate_temp(DataTypeToEnum<T>::v(),
                                           padded_out_shape, &padded_output));
     Eigen::DSizes<Eigen::DenseIndex, 5> no_op_shuffle{0, 1, 2, 3, 4};
-    Eigen::DSizes<Eigen::DenseIndex, 5> eigen_strides{1, strides[0], strides[1],
+    Eigen::DSizes<Eigen::DenseIndex, 5> eigen_strides{1, (Eigen::DenseIndex)strides[0], strides[1],
                                                       strides[2], 1};
     functor::InflatePadAndShuffle<Device, T, 5, Eigen::DenseIndex>()(
         context->eigen_device<Device>(), out_backprop.tensor<T, 5>(),
@@ -289,9 +289,9 @@ class Conv3DBackpropFilterOp : public OpKernel {
     EXTRACT_AND_VERIFY_DIMENSIONS("Conv3DBackpropFilter");
     Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 5> pad_dims{
         {0, 0},
-        {top_pad_planes, bottom_pad_planes},
-        {top_pad_rows, bottom_pad_rows},
-        {left_pad_cols, right_pad_cols},
+        { (Eigen::DenseIndex)top_pad_planes, (Eigen::DenseIndex)bottom_pad_planes},
+        { (Eigen::DenseIndex)top_pad_rows, (Eigen::DenseIndex)bottom_pad_rows},
+        { (Eigen::DenseIndex)left_pad_cols, (Eigen::DenseIndex)right_pad_cols},
         {0, 0}};
     Tensor* filter_backprop;
     OP_REQUIRES_OK(context,
@@ -315,7 +315,7 @@ class Conv3DBackpropFilterOp : public OpKernel {
     OP_REQUIRES_OK(context,
                    context->allocate_temp(DataTypeToEnum<T>::v(),
                                           padded_out_shape, &padded_output));
-    Eigen::DSizes<Eigen::DenseIndex, 5> eigen_strides{1, strides[0], strides[1],
+    Eigen::DSizes<Eigen::DenseIndex, 5> eigen_strides{1, (Eigen::DenseIndex)strides[0], strides[1],
                                                       strides[2], 1};
     functor::InflatePadAndShuffle<Device, T, 5, Eigen::DenseIndex>()(
         context->eigen_device<Device>(), out_backprop.tensor<T, 5>(),

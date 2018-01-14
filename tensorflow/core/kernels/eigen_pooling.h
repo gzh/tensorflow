@@ -281,7 +281,6 @@ struct AvgPoolMeanReducer {
   static const bool PacketAccess = false;
 #endif
   static const bool IsStateful = true;
-
   EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE AvgPoolMeanReducer() : scalarCount_(0) {
     typedef typename packet_traits<T>::type Packet;
     packetCount_ = pset1<Packet>(T(0.0));

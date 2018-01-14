@@ -162,7 +162,7 @@ class SplitOpCPU : public SplitOpBase<CPUDevice, T> {
 
     Eigen::DSizes<Eigen::DenseIndex, 3> indices{0, 0, 0};
     const Eigen::DSizes<Eigen::DenseIndex, 3> sizes{
-        prefix_dim_size, split_dim_output_size, suffix_dim_size};
+        prefix_dim_size, (Eigen::DenseIndex)split_dim_output_size, suffix_dim_size};
 
     const auto num_threads =
         context->device()->tensorflow_cpu_worker_threads()->num_threads;

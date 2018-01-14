@@ -24,7 +24,7 @@ if (WIN32)
         ${jemalloc_INCLUDE_DIRS} 
         ${CMAKE_CURRENT_BINARY_DIR}/jemalloc/src/jemalloc/include/msvc_compat
     )
-    set(jemalloc_ADDITIONAL_CMAKE_OPTIONS -A x64)
+    set(jemalloc_ADDITIONAL_CMAKE_OPTIONS -A Win32 -T v140_xp)
     set(jemalloc_STATIC_LIBRARIES ${jemalloc_BUILD}/Release/jemalloc.lib)
 else()
     set(jemalloc_STATIC_LIBRARIES ${jemalloc_BUILD}/Release/jemalloc.a)

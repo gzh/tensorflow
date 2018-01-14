@@ -367,7 +367,16 @@ class BFCAllocator : public VisitableAllocator {
     return 63 ^ __builtin_clzll(n);
 #elif defined(PLATFORM_WINDOWS)
     unsigned long index;
+#ifdef _WIN64
     _BitScanReverse64(&index, n);
+#else
+    uint32 nlo = *(reinterpret_cast<uint32*>(&n)+0);
+    uint32 nhi = *(reinterpret_cast<uint32*>(&n)+1);
+    if (_BitScanReverse(&index, nhi))
+        index += 32;
+    else
+        _BitScanReverse(&index, nlo);
+#endif
     return index;
 #else
     int r = 0;
