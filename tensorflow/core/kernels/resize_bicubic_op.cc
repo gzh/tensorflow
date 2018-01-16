@@ -404,42 +404,42 @@ inline void ResizeBicubicGrad(typename TTypes<float, 4>::ConstTensor input_grad,
       for (int64 x = 0; x < resized_width; ++x) {
         const WeightsAndIndices& x_wai = x_wais[x];
         for (int64 c = 0; c < channels; ++c) {
-          T curr_input_grad = input_grad(b, y, x, c);
+          T curr_input_grad = input_grad(b, y, (ptrdiff_t)x, (ptrdiff_t)c);
           // row 0 of 0, 1, 2, 3
-          output_grad(b, y_wai.index_0, x_wai.index_0, c) +=
+          output_grad(b, y_wai.index_0, (ptrdiff_t)x_wai.index_0, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_0 * x_wai.weight_0);
-          output_grad(b, y_wai.index_0, x_wai.index_1, c) +=
+          output_grad(b, y_wai.index_0, (ptrdiff_t)x_wai.index_1, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_0 * x_wai.weight_1);
-          output_grad(b, y_wai.index_0, x_wai.index_2, c) +=
+          output_grad(b, y_wai.index_0, (ptrdiff_t)x_wai.index_2, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_0 * x_wai.weight_2);
-          output_grad(b, y_wai.index_0, x_wai.index_3, c) +=
+          output_grad(b, y_wai.index_0, (ptrdiff_t)x_wai.index_3, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_0 * x_wai.weight_3);
           // row 1 of 0, 1, 2, 3
-          output_grad(b, y_wai.index_1, x_wai.index_0, c) +=
+          output_grad(b, y_wai.index_1, (ptrdiff_t)x_wai.index_0, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_1 * x_wai.weight_0);
-          output_grad(b, y_wai.index_1, x_wai.index_1, c) +=
+          output_grad(b, y_wai.index_1, (ptrdiff_t)x_wai.index_1, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_1 * x_wai.weight_1);
-          output_grad(b, y_wai.index_1, x_wai.index_2, c) +=
+          output_grad(b, y_wai.index_1, (ptrdiff_t)x_wai.index_2, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_1 * x_wai.weight_2);
-          output_grad(b, y_wai.index_1, x_wai.index_3, c) +=
+          output_grad(b, y_wai.index_1, (ptrdiff_t)x_wai.index_3, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_1 * x_wai.weight_3);
           // row 2 of 0, 1, 2, 3
-          output_grad(b, y_wai.index_2, x_wai.index_0, c) +=
+          output_grad(b, y_wai.index_2, (ptrdiff_t)x_wai.index_0, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_2 * x_wai.weight_0);
-          output_grad(b, y_wai.index_2, x_wai.index_1, c) +=
+          output_grad(b, y_wai.index_2, (ptrdiff_t)x_wai.index_1, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_2 * x_wai.weight_1);
-          output_grad(b, y_wai.index_2, x_wai.index_2, c) +=
+          output_grad(b, y_wai.index_2, (ptrdiff_t)x_wai.index_2, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_2 * x_wai.weight_2);
-          output_grad(b, y_wai.index_2, x_wai.index_3, c) +=
+          output_grad(b, y_wai.index_2, (ptrdiff_t)x_wai.index_3, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_2 * x_wai.weight_3);
           // row 3 of 0, 1, 2, 3
-          output_grad(b, y_wai.index_3, x_wai.index_0, c) +=
+          output_grad(b, y_wai.index_3, (ptrdiff_t)x_wai.index_0, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_3 * x_wai.weight_0);
-          output_grad(b, y_wai.index_3, x_wai.index_1, c) +=
+          output_grad(b, y_wai.index_3, (ptrdiff_t)x_wai.index_1, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_3 * x_wai.weight_1);
-          output_grad(b, y_wai.index_3, x_wai.index_2, c) +=
+          output_grad(b, y_wai.index_3, (ptrdiff_t)x_wai.index_2, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_3 * x_wai.weight_2);
-          output_grad(b, y_wai.index_3, x_wai.index_3, c) +=
+          output_grad(b, y_wai.index_3, (ptrdiff_t)x_wai.index_3, (ptrdiff_t)c) +=
               T(curr_input_grad * y_wai.weight_3 * x_wai.weight_3);
         }
       }

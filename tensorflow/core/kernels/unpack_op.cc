@@ -112,8 +112,8 @@ class UnpackOp : public OpKernel {
 
       if (output_shape.num_elements() > 0) {
         auto output_shaped = output->shaped<T, 3>({1, before_dim, after_dim});
-        Eigen::DSizes<Eigen::DenseIndex, 3> indices{0, 0, i * after_dim};
-        Eigen::DSizes<Eigen::DenseIndex, 3> sizes{1, (Eigen::DenseIndex)before_dim, after_dim};
+        Eigen::DSizes<Eigen::DenseIndex, 3> indices{0, 0, (ptrdiff_t)(i * after_dim)};
+        Eigen::DSizes<Eigen::DenseIndex, 3> sizes{1, (Eigen::DenseIndex)before_dim, (ptrdiff_t)after_dim};
         functor::Split<Device, T>()(context->eigen_device<Device>(),
                                     output_shaped, input_reshaped, indices,
                                     sizes);

@@ -107,7 +107,7 @@ struct ResizeNearestNeighbor<CPUDevice, T, align_corners> {
               (align_corners) ? static_cast<int64>(roundf(x * width_scale))
                               : static_cast<int64>(floorf(x * width_scale)),
               in_width - 1);
-          std::copy_n(&input(b, in_y, in_x, 0), channels, &output(b, y, x, 0));
+          std::copy_n(&input(b, in_y, (ptrdiff_t)in_x, 0), channels, &output(b, y, x, 0));
         }
       }
     }
@@ -221,7 +221,7 @@ struct ResizeNearestNeighborGrad<CPUDevice, T, align_corners> {
             out_width - 1);
         for (int b = 0; b < batch_size; ++b) {
           for (int c = 0; c < channels; ++c) {
-            output(b, out_y, out_x, c) += input(b, y, x, c);
+            output(b, out_y, (ptrdiff_t)out_x, c) += input(b, y, (ptrdiff_t)x, c);
           }
         }
       }

@@ -149,7 +149,7 @@ struct MatrixDiag<CPUDevice, T> {
     output.device(d) = output.constant(T());
     for (int64 r = 0; r < output.dimension(0); ++r) {
       for (int64 d = 0; d < output.dimension(1); ++d) {
-        output(r, d, d) = input(r, d);
+        output(r, d, (ptrdiff_t)d) = input(r, d);
       }
     }
   }
@@ -162,7 +162,7 @@ struct MatrixDiagPart<CPUDevice, T> {
                       typename TTypes<T, 2>::Tensor output) {
     for (int64 r = 0; r < output.dimension(0); ++r) {
       for (int64 d = 0; d < output.dimension(1); ++d) {
-        output(r, d) = input(r, d, d);
+        output(r, d) = input(r, d, (ptrdiff_t)d);
       }
     }
   }

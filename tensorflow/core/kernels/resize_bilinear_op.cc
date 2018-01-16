@@ -312,14 +312,14 @@ struct ResizeBilinearGrad<CPUDevice, T> {
           const float x_lerp = in_x - left_x_index;
           const float inverse_x_lerp = (1.0f - x_lerp);
           for (int64 c = 0; c < channels; ++c) {
-            output_grad(b, top_y_index, left_x_index, c) +=
-                T(input_grad(b, y, x, c) * inverse_y_lerp * inverse_x_lerp);
-            output_grad(b, top_y_index, right_x_index, c) +=
-                T(input_grad(b, y, x, c) * inverse_y_lerp * x_lerp);
-            output_grad(b, bottom_y_index, left_x_index, c) +=
-                T(input_grad(b, y, x, c) * y_lerp * inverse_x_lerp);
-            output_grad(b, bottom_y_index, right_x_index, c) +=
-                T(input_grad(b, y, x, c) * y_lerp * x_lerp);
+            output_grad(b, top_y_index, (ptrdiff_t)left_x_index, (ptrdiff_t)c) +=
+                T(input_grad(b, y, (ptrdiff_t)x, (ptrdiff_t)c) * inverse_y_lerp * inverse_x_lerp);
+            output_grad(b, top_y_index, (ptrdiff_t)right_x_index, (ptrdiff_t)c) +=
+                T(input_grad(b, y, (ptrdiff_t)x, (ptrdiff_t)c) * inverse_y_lerp * x_lerp);
+            output_grad(b, bottom_y_index, (ptrdiff_t)left_x_index, (ptrdiff_t)c) +=
+                T(input_grad(b, y, (ptrdiff_t)x, (ptrdiff_t)c) * y_lerp * inverse_x_lerp);
+            output_grad(b, bottom_y_index, (ptrdiff_t)right_x_index, (ptrdiff_t)c) +=
+                T(input_grad(b, y, (ptrdiff_t)x, (ptrdiff_t)c) * y_lerp * x_lerp);
           }
         }
       }

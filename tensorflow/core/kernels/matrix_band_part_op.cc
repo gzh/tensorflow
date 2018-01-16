@@ -157,19 +157,19 @@ struct MatrixBandPartFunctor<CPUDevice, Scalar> {
                   : std::min(static_cast<int64>(n), row + num_upper_diags + 1);
           if (in_place) {
             if (band_start > 0) {
-              std::fill(&output(batch, row, 0), &output(batch, row, band_start),
+              std::fill(&output(batch, row, 0), &output(batch, row, (ptrdiff_t)band_start),
                         Scalar());
             }
             if (band_end < n) {
-              std::fill(&output(batch, row, band_end), &output(batch, row, n),
+              std::fill(&output(batch, row, (ptrdiff_t)band_end), &output(batch, row, (ptrdiff_t)n),
                         Scalar());
             }
           } else {
             if (band_start < band_end) {
               const Eigen::DSizes<Eigen::DenseIndex, 3> indices(batch, row,
-                                                                band_start);
+                  (ptrdiff_t)band_start);
               const Eigen::DSizes<Eigen::DenseIndex, 3> sizes(
-                  1, 1, band_end - band_start);
+                  1, 1, (ptrdiff_t)(band_end - band_start));
               output.slice(indices, sizes) = input.slice(indices, sizes);
             }
           }

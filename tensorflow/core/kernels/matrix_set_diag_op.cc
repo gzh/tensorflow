@@ -124,7 +124,7 @@ struct MatrixSetDiag<CPUDevice, T> {
     output.device(d) = input;
     for (int64 r = 0; r < output.dimension(0); ++r) {
       for (int64 d = 0; d < diag.dimension(1); ++d) {
-        output(r, d, d) = diag(r, d);
+        output(r, d, (ptrdiff_t)d) = diag(r, d);
       }
     }
   }
@@ -139,7 +139,7 @@ struct MatrixSetDiag<CPUDevice, bool> {
     output.device(d) = input;
     for (int64 r = 0; r < output.dimension(0); ++r) {
       for (int64 d = 0; d < diag.dimension(1); ++d) {
-        output(r, d, d) = diag(r, d);
+        output(r, d, (ptrdiff_t)d) = diag(r, d);
       }
     }
   }

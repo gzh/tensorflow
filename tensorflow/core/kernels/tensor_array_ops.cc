@@ -1079,7 +1079,7 @@ class TensorArrayUnpackOrScatterOp : public OpKernel {
 
     Eigen::DSizes<Eigen::DenseIndex, 3> indices{0, 0, 0};
     Eigen::DSizes<Eigen::DenseIndex, 3> sizes{1, 1,
-                                              element_shape.num_elements()};
+        (ptrdiff_t)element_shape.num_elements()};
 
     std::vector<PersistentTensor> write_values;
     write_values.reserve(num_values);
@@ -1275,7 +1275,7 @@ class TensorArraySplitOp : public OpKernel {
       int64 previous_length = (i == 0) ? 0 : cumulative_lengths[i - 1];
       Eigen::DSizes<Eigen::DenseIndex, 3> indices{0, (Eigen::DenseIndex)previous_length, 0};
       Eigen::DSizes<Eigen::DenseIndex, 3> sizes{1, (Eigen::DenseIndex)tensor_lengths_t(i),
-                                                elements_per_row};
+          (ptrdiff_t)elements_per_row};
 
       OP_REQUIRES_OK(ctx, ctx->allocate_persistent(
                               tensor_array->ElemType(), element_shapes[i],
